@@ -19,9 +19,9 @@ int Crear_Arreglo_de_secuencias(uint64_t arreglo[], uint64_t n, secuencia* A_pri
   	uint64_t inicio = arreglo[0];
 	uint64_t fin;
 
-	/* Esta variable comprobara si estamos en una secuencia ascendente o desentente.
+	/* Esta variable comprobara si estamos en una secuencia ascendente o descendente.
 	   Si el valor es 0 no es descendente y 1 si lo es*/
-  	int desendente = 0;
+  	int descendente = 0;
   	
   	for (uint64_t i = 1; i < n; ++i) 
     {
@@ -29,18 +29,18 @@ int Crear_Arreglo_de_secuencias(uint64_t arreglo[], uint64_t n, secuencia* A_pri
     	  Esto se hace de esta manera por el hecho de que partimos en i=1 comparando con i=0*/
     	if( (arreglo[i] == (arreglo[i-1]+1)) ){
     		comprobar_consecutivo=1;
-    		desendente = 0;
+    		descendente = 0;
 		}
 		/*Comprobamos si existe un valor menor consecutivo en la posicion i con el elemento de i-1*/
 		else if( (arreglo[i] == (arreglo[i-1]-1)) ){
 			comprobar_consecutivo = 1;
-    		desendente = 1;
+    		descendente = 1;
 		}
 		/* Se entra al else cuando ya no existen numeros consecutivos, de esta forma comienza el proceso
 		   De crear el paquete con los valores y agregarlos a A_prima*/
         else{
         	//si la secuencia es ascendente entramos al if
-        	if(desendente == 0){
+        	if(descendente == 0){
         		/*cambiamos el valor de comprobar_consecutivos a 0 ya que el elemento en i rompe la secuencia*/
 	        	comprobar_consecutivo=0;
 	        	/* Agregamos como fin el elemento de i-1, ya que es el ultimo 
@@ -71,8 +71,8 @@ int Crear_Arreglo_de_secuencias(uint64_t arreglo[], uint64_t n, secuencia* A_pri
 			}
 			/*si la secuencia es descendente entramos al else if.
 			  Se realiza el mismo proceso que con el if para secuencias ascendentes
-			  (desendente == 0) */
-			else if(desendente == 1){
+			  (descendente == 0) */
+			else if(descendente == 1){
 	        	comprobar_consecutivo=0;
 	        	fin=arreglo[i-1];
 	        	paquete.Inicio = fin;
@@ -97,14 +97,14 @@ int Crear_Arreglo_de_secuencias(uint64_t arreglo[], uint64_t n, secuencia* A_pri
 		  El procedimiento de agregar los paquetes es el mismo que en las 
 		  fases anteriores*/
 		if( i==(n-1) && comprobar_consecutivo==1){
-			if(desendente == 0){
+			if(descendente == 0){
 				fin=arreglo[i];
 	        	paquete.Inicio = inicio;
 	        	paquete.Fin = fin;
 	        	A_prima[Cantidad_De_Paquetes] = paquete;
 	        	Cantidad_De_Paquetes++;
 			}
-        	else if(desendente == 1){
+        	else if(descendente == 1){
         		fin=arreglo[i];
         		paquete.Inicio = fin;
 	        	paquete.Fin = inicio;
